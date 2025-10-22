@@ -1,34 +1,17 @@
 package main
 
-import (
-	"fmt"
-)
+import "fmt"
 
 func main() {
-	transactions := []float64{}
-	for {
-		transaction := scanTransaction()
-		if transaction == 0 {
-			break
-		}
-		transactions = append(transactions, transaction)
+	m := map[string]string{
+		"Bekforever": "https://bekforever.com",
 	}
 
-	balance := calculateBalance(transactions)
-	fmt.Printf("Ваш баланс: %.2f",balance)
-}
+	fmt.Println(m)
+	fmt.Println(m["Bekforever"])
+	m["Google"] = "https://google.com"
 
-func scanTransaction() float64 {
-	var transaction float64
-	fmt.Print("Введите транзакцию (n для выхода): ")
-	fmt.Scan(&transaction)
-	return transaction
-}
-
-func calculateBalance(transactions []float64) float64 {
-	balance := 0.0
-	for _, value := range transactions {
-		balance += value
-	}
-	return balance
+	fmt.Println(m)
+	delete(m, "Google")
+	fmt.Println(m)
 }
