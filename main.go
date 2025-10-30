@@ -10,39 +10,40 @@ func main() {
 		"Yandex":  "https://yandex.ru",
 		"Youtube": "https://youtube.com",
 	}
-	currentAction := 0
 
-	showMenu()
+Menu:
+	for {
+		variant := showMenu()
 
-	fmt.Print("Выберите действие: ")
-	fmt.Scan(&currentAction)
+		switch variant {
+		case 1:
+			showBookmarks(m)
 
-	switch currentAction {
-	case 1:
-		showBookmarks(m)
+		case 2:
+			key, value := addBookmark()
+			m[key] = value
+			showBookmarks(m)
+		case 3:
+			selectedBookmark := deleteBookmark(m)
+			delete(m, selectedBookmark)
 
-	case 2:
-		key, value := addBookmark()
-		m[key] = value
-		showBookmarks(m)
-	case 3:
-		selectedBookmark := deleteBookmark(m)
-		delete(m, selectedBookmark)
-
-		showBookmarks(m)
-	default:
-		break
+			showBookmarks(m)
+		default:
+			break Menu
+		}
 	}
 }
 
-func showMenu() {
-	fmt.Println("")
-	fmt.Println("")
+func showMenu() int {
+	var variant int
 	fmt.Println("Меню")
 	fmt.Println("1: Посмотреть закладки")
 	fmt.Println("2: Добавить закладку")
 	fmt.Println("3: Удалить закладку")
 	fmt.Println("4: Выход")
+	fmt.Print("Выберите действие: ")
+	fmt.Scan(&variant)
+	return variant
 }
 
 func showBookmarks(bookmarks map[string]string) {
