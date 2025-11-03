@@ -5,30 +5,13 @@ import (
 )
 
 func main() {
-	transactions := []float64{}
-	for {
-		transaction := scanTransaction()
-		if transaction == 0 {
-			break
-		}
-		transactions = append(transactions, transaction)
-	}
-
-	balance := calculateBalance(transactions)
-	fmt.Printf("Ваш баланс: %.2f",balance)
+	a := [4]int{1, 2, 3, 4}
+	reverse(&a)
+	fmt.Println(&a)
 }
 
-func scanTransaction() float64 {
-	var transaction float64
-	fmt.Print("Введите транзакцию (n для выхода): ")
-	fmt.Scan(&transaction)
-	return transaction
-}
-
-func calculateBalance(transactions []float64) float64 {
-	balance := 0.0
-	for _, value := range transactions {
-		balance += value
+func reverse(a *[4]int) {
+	for index, value := range *a {
+		a[len(*a)-index-1] = value
 	}
-	return balance
 }
