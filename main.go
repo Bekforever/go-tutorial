@@ -4,8 +4,10 @@ import (
 	"fmt"
 )
 
+type bookmarkMap = map[string]string
+
 func main() {
-	m := map[string]string{
+	m := bookmarkMap{
 		"Google":  "https://google.com",
 		"Yandex":  "https://yandex.ru",
 		"Youtube": "https://youtube.com",
@@ -46,7 +48,7 @@ func showMenu() int {
 	return variant
 }
 
-func showBookmarks(bookmarks map[string]string) {
+func showBookmarks(bookmarks bookmarkMap) {
 	fmt.Println("")
 
 	for key, value := range bookmarks {
@@ -67,7 +69,7 @@ func addBookmark() (string, string) {
 	return key, value
 }
 
-func deleteBookmark(bookmarks map[string]string) string {
+func deleteBookmark(bookmarks bookmarkMap) string {
 	selectedBookmark := ""
 
 	showBookmarks(bookmarks)
