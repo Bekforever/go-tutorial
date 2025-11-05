@@ -2,16 +2,23 @@ package main
 
 import (
 	"fmt"
+	"math/rand"
 )
 
+var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-*!")
+
 func main() {
-	a := [4]int{1, 2, 3, 4}
-	reverse(&a)
-	fmt.Println(&a)
+
+	fmt.Println(generatePassword(12))
+
 }
 
-func reverse(a *[4]int) {
-	for index, value := range *a {
-		a[len(*a)-index-1] = value
+func generatePassword(maxLength int) string {
+	res := make([]rune, maxLength)
+
+	for i := range res {
+		res[i] = letterRunes[rand.Intn(len(letterRunes))]
 	}
+
+	return string(res)
 }
