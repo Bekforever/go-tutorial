@@ -46,7 +46,7 @@ func (acc *Account) generatePassword(maxLength int) {
 
 func NewAccount(login, password, urlString string) (*Account, error) {
 	if login == "" {
-		return nil, errors.New("INVALID_LOGIN")
+		return nil, errors.New("fwe efw")
 	}
 
 	_, err := url.ParseRequestURI(urlString)
