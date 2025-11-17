@@ -1,6 +1,7 @@
 package account
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"math/rand"
@@ -13,20 +14,24 @@ import (
 var letterRunes = []rune("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890-*!")
 
 type Account struct {
-	login    string
-	password string
-	url      string
-}
-
-type accountWithTimeStamp struct {
-	createdAt time.Time
-	updatedAt time.Time
-	Account
+	Login     string    `json:"login"`
+	Password  string    `json:"password"`
+	Url       string    `json:"url"`
+	CreatedAt time.Time `json:"createdAt"`
+	UpdatedAt time.Time `json:"updatedAt"`
 }
 
 func (acc *Account) OutputPassword() {
-	color.Cyan(acc.login)
-	fmt.Println(acc.login, acc.password, acc.url)
+	color.Cyan(acc.Login)
+	fmt.Println(acc.Login, acc.Password, acc.Url)
+}
+
+func (acc *Account) ToBytes() ([]byte, error) {
+	file, err := json.Marshal((acc))
+	if err != nil {
+		return nil, err
+	}
+	return file, nil
 }
 
 func (acc *Account) generatePassword(maxLength int) {
@@ -36,10 +41,10 @@ func (acc *Account) generatePassword(maxLength int) {
 		res[i] = letterRunes[rand.Intn(len(letterRunes))]
 	}
 
-	acc.password = string(res)
+	acc.Password = string(res)
 }
 
-func NewAccountWithTimeStamp(login, password, urlString string) (*accountWithTimeStamp, error) {
+func NewAccount(login, password, urlString string) (*Account, error) {
 	if login == "" {
 		return nil, errors.New("INVALID_LOGIN")
 	}
@@ -49,14 +54,12 @@ func NewAccountWithTimeStamp(login, password, urlString string) (*accountWithTim
 		return nil, errors.New("INVALID_URL")
 	}
 
-	newAcc := &accountWithTimeStamp{
-		createdAt: time.Now(),
-		updatedAt: time.Now(),
-		Account: Account{
-			url:      urlString,
-			password: password,
-			login:    login,
-		},
+	newAcc := &Account{
+		CreatedAt: time.Now(),
+		UpdatedAt: time.Now(),
+		Url:       urlString,
+		Password:  password,
+		Login:     login,
 	}
 
 	if password == "" {
